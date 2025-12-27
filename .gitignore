@@ -1,3 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+*.translation # 自動生成的翻譯檔
+Thumbs.db # Windows 縮圖快取
+
+#編輯器的佈局、開啟過的腳本等個人偏好
+export_presets.cfg
