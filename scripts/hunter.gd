@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
 class_name Hunter
-@export var speed: int = 20
-var speed_const = 1000
+@export var speed: int = 250
 var swinging = false
 const HIT_FRAME = 3
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_shape: CollisionShape2D = $hitbox/CollisionShape2D
+@onready var hitbox: Area2D = $hitbox
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "swing":
@@ -28,18 +28,41 @@ func handleInput(delta:float):
 	var moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if Input.is_action_just_pressed("mouse_left"):
 		swinging = true
-	velocity = moveDirection * speed * speed_const * delta
+	velocity = moveDirection * speed
+	
+	
+func handleHitboxDir():
+	if velocity.x < 0 && velocity.y == 0:
+		hitbox.rotation_degrees = 180
+	elif velocity.x > 0 && velocity.y == 0:
+		hitbox.rotation_degrees = 0
+	elif velocity.x == 0 && velocity.y < 0:
+		hitbox.rotation_degrees = 270
+	elif velocity.x == 0 && velocity.y > 0:
+		hitbox.rotation_degrees = 90
+	elif velocity.x < 0 && velocity.y < 0:
+		hitbox.rotation_degrees = 225
+	elif velocity.x < 0 && velocity.y > 0:
+		hitbox.rotation_degrees = 135
+	elif velocity.x > 0 && velocity.y < 0:
+		hitbox.rotation_degrees = 315
+	elif velocity.x > 0 && velocity.y > 0:
+		hitbox.rotation_degrees = 45
+	else:
+		pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#animated_sprite_2d.frame_changed.connect(_on_animated_sprite_2d_frame_changed)
 	animated_sprite_2d.play("idle")
+	hitbox.rotation_degrees = 0
 	hitbox_shape.disabled = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	handleInput(delta)
+	handleHitboxDir()
 	if swinging == true:
 		animated_sprite_2d.play("swing")
 		if velocity.x < 0:
@@ -55,6 +78,5 @@ func _physics_process(delta: float) -> void:
 				animated_sprite_2d.flip_h = true
 			elif velocity.x > 0:
 				animated_sprite_2d.flip_h = false
-
-			
+	
 	move_and_slide()
