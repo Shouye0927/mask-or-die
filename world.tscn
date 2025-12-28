@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmdkh6pg5s767"]
+[gd_scene load_steps=3 format=3 uid="uid://dmdkh6pg5s767"]
 
 [ext_resource type="PackedScene" uid="uid://c33h0dndg70qx" path="res://scene/animal.tscn" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://db78a6v3ow61v" path="res://scene/hunter.tscn" id="1_fj7yv"]
 
 [node name="World" type="Node2D"]
 
+[node name="hunter" parent="." instance=ExtResource("1_fj7yv")]
+position = Vector2(247.99998, 126.99999)
+
 [node name="Animal" parent="." instance=ExtResource("1_f3sb7")]
+visible = false
 position = Vector2(304, 139)
