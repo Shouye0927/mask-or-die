@@ -169,7 +169,7 @@ size = Vector2(18.800003, 20.000004)
 
 [node name="hunter" type="CharacterBody2D"]
 texture_filter = 1
-scale = Vector2(5, 5)
+scale = Vector2(4.5, 4.5)
 script = ExtResource("1_317ji")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
