@@ -45,7 +45,7 @@ func apply_knock_back(source_pos : Vector2 ,power : int):
 		
 func _physics_process(delta: float) -> void:
 	knock_back_velocity = knock_back_velocity.lerp(Vector2.ZERO, friction * delta)
-	print(knock_back_velocity)
+	#print(knock_back_velocity)
 	match current_state:
 		State.CHASE:
 			velocity = (target.global_position - global_position).normalized() * speed + knock_back_velocity
@@ -72,20 +72,21 @@ func backToPath():
 
 func _on_detection_range_body_entered(body: Node2D) -> void:
 	if body is Hunter:
-		target = body
-		if current_state == State.PATROL:
-			storePath2D()
-			
-			current_state = State.STOP
-			$exclamation_label.show()
-			await get_tree().create_timer(1).timeout
-			$exclamation_label.hide()
-			#print("%s execute stop" % self.name)
-		if target:
-			current_state = State.CHASE
-			#print_debug("enter_chase")
-		else:
-			current_state = State.RETURN
+		if body.get_identity() == "HUNTER":
+			target = body
+			if current_state == State.PATROL:
+				storePath2D()
+				
+				current_state = State.STOP
+				$exclamation_label.show()
+				await get_tree().create_timer(1).timeout
+				$exclamation_label.hide()
+				#print("%s execute stop" % self.name)
+			if target:
+				current_state = State.CHASE
+				#print_debug("enter_chase")
+			else:
+				current_state = State.RETURN
 
 
 func _on_return_range_body_exited(body: Node2D) -> void:
