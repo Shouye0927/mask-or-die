@@ -8,6 +8,7 @@ const HIT_FRAME = 3
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_shape: CollisionShape2D = $hitbox/CollisionShape2D
 @onready var hitbox: Area2D = $hitbox
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "swing":
@@ -18,8 +19,12 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if animated_sprite_2d.animation != "swing":
 		return
 		
+	if animated_sprite_2d.frame == 0:
+		audio_stream_player_2d.play()
+		
 	if animated_sprite_2d.frame == HIT_FRAME:
 		hitbox_shape.disabled = false
+		
 	if animated_sprite_2d.frame == HIT_FRAME + 1:
 		hitbox_shape.disabled = true
 
@@ -62,6 +67,7 @@ func handleHitboxDir():
 func _ready() -> void:
 	#animated_sprite_2d.frame_changed.connect(_on_animated_sprite_2d_frame_changed)
 	animated_sprite_2d.play("idle")
+	audio_stream_player_2d.stream = preload("res://art/sound/sword-sound-260274.mp3")
 	hitbox.rotation_degrees = 0
 	hitbox_shape.disabled = true
 
