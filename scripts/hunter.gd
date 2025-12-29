@@ -23,6 +23,11 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if animated_sprite_2d.frame == HIT_FRAME + 1:
 		hitbox_shape.disabled = true
 
+func on_zone_entered(zone: Area2D) -> void:
+	pass
+	
+func on_zone_exited(zone: Area2D) -> void:
+	pass
 
 func handleInput(delta:float):
 	var moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -50,6 +55,8 @@ func handleHitboxDir():
 		hitbox.rotation_degrees = 45
 	else:
 		pass
+		
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

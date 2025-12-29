@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://dmdkh6pg5s767"]
+[gd_scene load_steps=10 format=4 uid="uid://dmdkh6pg5s767"]
 
 [ext_resource type="Texture2D" uid="uid://dmk3aexaew4y1" path="res://Tiny Swords/Tiny Swords/Terrain/Ground/Tilemap_Flat.png" id="1_fj7yv"]
 [ext_resource type="Texture2D" uid="uid://bn65q1f6isuiu" path="res://Tiny Swords/Tiny Swords/Factions/Knights/Buildings/Tower/Tower_Blue.png" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://db78a6v3ow61v" path="res://scene/hunter.tscn" id="3_aqk2v"]
 [ext_resource type="Script" uid="uid://7n5rrh7wfukl" path="res://scripts/blue_tower_path.gd" id="4_aqk2v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlwt5"]
@@ -74,6 +75,9 @@ tile_set = SubResource("TileSet_aqk2v")
 scale = Vector2(1.5, 1.5)
 tile_map_data = PackedByteArray("AAADAA4AAAAAAAAAAAADAAMAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_036b0")
+
+[node name="hunter" parent="." instance=ExtResource("3_aqk2v")]
+position = Vector2(-106, 557)
 
 [node name="blue_tower_path" type="Path2D" parent="."]
 curve = SubResource("Curve2D_tlwt5")
