@@ -1,0 +1,136 @@
+[gd_scene load_steps=19 format=3 uid="uid://bq6mfbrw17mlm"]
+
+[ext_resource type="Script" uid="uid://cyamjn70u2juj" path="res://scripts/dead_bone.gd" id="1_bhv12"]
+[ext_resource type="Texture2D" uid="uid://dx5m2xqvgkk7b" path="res://Tiny Swords/Tiny Swords/Factions/Knights/Troops/Dead/Dead.png" id="2_05a4p"]
+[ext_resource type="Texture2D" uid="uid://dp0hda1e1021e" path="res://Tiny Swords/Tiny Swords/Resources/Sheep/HappySheep_Bouncing.png" id="3_etm6q"]
+[ext_resource type="Texture2D" uid="uid://2g55ggajqods" path="res://Tiny Swords/Tiny Swords/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png" id="4_0a82r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bhv12"]
+radius = 105.01904
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctd1k"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mk2b"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsu11"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_row0e"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5emfv"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjsuf"]
+atlas = ExtResource("3_etm6q")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iepkq"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq7l8"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fn7o"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tckd"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34gwl"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hm0lx"]
+atlas = ExtResource("4_0a82r")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_07hmi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctd1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mk2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsu11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_row0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5emfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjsuf")
+}],
+"loop": true,
+"name": &"sheep",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iepkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq7l8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fn7o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tckd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34gwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hm0lx")
+}],
+"loop": true,
+"name": &"warrior",
+"speed": 10.0
+}]
+
+[node name="deadBone" type="Area2D"]
+y_sort_enabled = true
+collision_layer = 0
+script = ExtResource("1_bhv12")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, 46)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_05a4p")
+offset = Vector2(-1.3333334, -30.666668)
+hframes = 7
+vframes = 2
+frame = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 20)
+shape = SubResource("CircleShape2D_bhv12")
+
+[node name="soul" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.5882353)
+position = Vector2(2.0000005, -82.00001)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_07hmi")
+animation = &"warrior"
+frame_progress = 0.72389704
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

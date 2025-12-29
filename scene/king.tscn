@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dxydwgxeag1ip"]
+
+[ext_resource type="Texture2D" uid="uid://c8i5c4rqcjxk" path="res://Tiny Swords/Tiny Swords/Factions/Knights/Troops/Pawn/Blue/Pawn_Blue.png" id="1_5oiee"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2q4d"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(0, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tl4kl"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(192, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty84g"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(384, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p07hx"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(576, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f68yo"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(768, 960, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkya5"]
+atlas = ExtResource("1_5oiee")
+region = Rect2(960, 960, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b7we4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2q4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tl4kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty84g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p07hx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f68yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkya5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5oiee"]
+radius = 26.172504
+
+[node name="King" type="CharacterBody2D"]
+scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-15, -8)
+sprite_frames = SubResource("SpriteFrames_b7we4")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5oiee")
+
+[node name="label" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_left = -188.0
+offset_top = -188.0
+offset_right = 234.0
+offset_bottom = -51.0
+theme_override_font_sizes/font_size = 100
+text = "THE END"

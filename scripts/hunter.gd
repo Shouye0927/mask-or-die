@@ -10,6 +10,9 @@ const HIT_FRAME = 3
 @onready var hitbox: Area2D = $hitbox
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
+enum Identity {HUNTER,SHEEP,WARRIOR}
+var identity : Identity = Identity.HUNTER
+
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "swing":
 		swinging = false
@@ -75,26 +78,72 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	handleInput(delta)
-	handleHitboxDir()
-	if swinging == true:
-		animated_sprite_2d.play("swing")
-		if velocity.x < 0:
-			animated_sprite_2d.flip_h = true
-		elif velocity.x > 0:
-			animated_sprite_2d.flip_h = false
-	else:
-		if velocity.length() == 0:
-			animated_sprite_2d.play("idle")
-		else:
-			animated_sprite_2d.play("walk")
-			if velocity.x < 0:
-				animated_sprite_2d.flip_h = true
-			elif velocity.x > 0:
-				animated_sprite_2d.flip_h = false
+	if Input.is_action_just_pressed("transition"):
+		if identity != Identity.HUNTER:
+			identity = Identity.HUNTER
+	match identity:
+		Identity.HUNTER:
+			$AnimatedSprite2D.scale = Vector2(1,1)
+			handleHitboxDir()
+			if swinging == true:
+				animated_sprite_2d.play("swing")
+				if velocity.x < 0:
+					animated_sprite_2d.flip_h = true
+				elif velocity.x > 0:
+					animated_sprite_2d.flip_h = false
+			else:
+				if velocity.length() == 0:
+					animated_sprite_2d.play("idle")
+				else:
+					animated_sprite_2d.play("walk")
+					if velocity.x < 0:
+						animated_sprite_2d.flip_h = true
+					elif velocity.x > 0:
+						animated_sprite_2d.flip_h = false
+		Identity.SHEEP:
+			$AnimatedSprite2D.scale = Vector2(0.5,0.5)
+			if velocity.length() == 0:
+				animated_sprite_2d.play("sheep_idle")
+			else:
+				animated_sprite_2d.play("sheep_walk")
+				if velocity.x < 0:
+					animated_sprite_2d.flip_h = true
+				elif velocity.x > 0:
+					animated_sprite_2d.flip_h = false
+		Identity.WARRIOR:
+			$AnimatedSprite2D.scale = Vector2(0.3,0.3)
+			if velocity.length() == 0:
+				animated_sprite_2d.play("warrior_idle")
+			else:
+				animated_sprite_2d.play("warrior_walk")
+				if velocity.x < 0:
+					animated_sprite_2d.flip_h = true
+				elif velocity.x > 0:
+					animated_sprite_2d.flip_h = false
 	
 	move_and_slide()
-
-
+	
+func transition(type : String):
+	if type == "SHEEP":
+		identity = Identity.SHEEP
+	if type == "WARRIOR":
+		identity = Identity.WARRIOR
+		
+func get_identity():
+	match identity:
+		Identity.HUNTER:
+			return "HUNTER"
+		Identity.SHEEP:
+			return "SHEEP"
+		Identity.WARRIOR:
+			return "WARRIOR"
+		
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.name == "hurtBox":
 		area.get_parent().apply_knock_back(global_position ,800)
+		
+	
+	
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.name == "King":
+		body.get_node("label").show()
