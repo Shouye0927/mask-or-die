@@ -22,7 +22,10 @@ func spawn_warrior():
 func _process(delta: float) -> void:
 	for follow_node in get_children():
 		if follow_node is PathFollow2D:
-			follow_node.progress += warrior_speed * delta
+			if follow_node.get_child_count() > 0:
+				var warrior = follow_node.get_child(0)
+				if warrior.get("current_state") == 0: # 0設計是PATROL
+					follow_node.progress += warrior_speed * delta
 			if follow_node.progress >= total_length:
 				follow_node.progress = 0
 		

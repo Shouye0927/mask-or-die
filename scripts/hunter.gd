@@ -80,3 +80,8 @@ func _physics_process(delta: float) -> void:
 				animated_sprite_2d.flip_h = false
 	
 	move_and_slide()
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.name == "hurtBox":
+		area.get_parent().apply_knock_back(global_position ,800)

@@ -161,14 +161,17 @@ animations = [{
 size = Vector2(20, 11)
 
 [node name="sheep" type="CharacterBody2D"]
+y_sort_enabled = true
 position = Vector2(750, 400)
 scale = Vector2(2.5, 2.5)
 script = ExtResource("1_e4seb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 16.799988)
 sprite_frames = SubResource("SpriteFrames_d6ekt")
 animation = &"bounce"
 frame_progress = 0.5661204
+offset = Vector2(0, -16.799988)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2.5)
